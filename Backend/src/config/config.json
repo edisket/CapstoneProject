@@ -1,0 +1,10 @@
+{
+    "dev":{
+        "host":"localhost",
+        "port":"3306",
+        "dialect":"mysql",
+        "username":"newuser",
+        "password" :"Password@1",
+        "database":"thesis_schema"
+    }
+}
