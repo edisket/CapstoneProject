@@ -1,0 +1,20 @@
+<mat-sidenav-container class="w-100 h-100">
+  <mat-sidenav #sidenav class="p-3 w-20" mode="side" opened="true">
+    <layout-component></layout-component>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <button class="btn btn-primary m-3" mat-button (click)="sidenav.toggle()">
+      <i class="bi bi-arrow-left-square" *ngIf="sidenav.opened"></i>
+      <i class="bi bi-arrow-right-square" *ngIf="!sidenav.opened"></i>
+    </button>
+
+
+      <div class="p-3">
+        <router-outlet></router-outlet>
+      </div>
+    
+
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

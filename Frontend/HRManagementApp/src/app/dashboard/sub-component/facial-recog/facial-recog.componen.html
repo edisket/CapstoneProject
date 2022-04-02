@@ -1,0 +1,29 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div #videoContainer class="video-container">
+                    <video #video [width]="WIDTH" [height]="HEIGHT" autoplay muted></video>
+                </div>
+            </div>
+           
+            <div class="row">
+                <button class="btn btn-primary" (click)="OnCaptureImg()">Capture</button>
+                <button class="btn btn-success mx-2" (click)="OnMatch()">Match</button>
+            </div>
+            
+        </div>
+        <div class="col">
+            <div class="row">
+                <img #imageContainer width="500px" height="500px" [src] ="imgSrc">
+                <canvas style="position:absolute; width:500px; height:500px; top:0; left:0;" #canvasMatcher></canvas>
+            </div>
+            <div class="row">
+                <input type="file" accept="image/png, image/jpeg" (change)="OnFileChange($event)">
+            </div>
+
+        </div>
+    </div>
+</div>
+

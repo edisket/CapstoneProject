@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center justify-content-center h-100">
+    <div>
+        <h1>Register</h1>
+        <form [formGroup]="registerCfg.formGroup" (ngSubmit)="OnSubmit()">
+            <formly-form [form]="registerCfg.formGroup" [fields]="registerCfg.formFields" [model]="registerCfg.model">
+            </formly-form>
+            <div class="d-flex  ">
+                <button class="align-self-start btn btn-primary">Create Account</button>
+            </div>
+
+        </form>
+    </div>
+</div>
