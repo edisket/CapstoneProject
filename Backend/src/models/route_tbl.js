@@ -1,31 +1,22 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('account', {
+  return sequelize.define('route_tbl', {
     id: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    first_name: {
+    item_name: {
       type: DataTypes.STRING(45),
       allowNull: true
     },
-    last_name: {
+    route_path: {
       type: DataTypes.STRING(45),
-      allowNull: true
-    },
-    username: {
-      type: DataTypes.STRING(45),
-      allowNull: true
-    },
-    password: {
-      type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'account',
+    tableName: 'route_tbl',
     timestamps: false,
     indexes: [
       {

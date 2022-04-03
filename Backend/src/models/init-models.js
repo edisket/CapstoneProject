@@ -8,6 +8,7 @@ var _emp_pos_tbl = require("./emp_pos_tbl");
 var _employee_info = require("./employee_info");
 var _payroll_info = require("./payroll_info");
 var _position_tbl = require("./position_tbl");
+var _route_tbl = require("./route_tbl");
 
 function initModels(sequelize) {
   var account = _account(sequelize, DataTypes);
@@ -19,6 +20,7 @@ function initModels(sequelize) {
   var employee_info = _employee_info(sequelize, DataTypes);
   var payroll_info = _payroll_info(sequelize, DataTypes);
   var position_tbl = _position_tbl(sequelize, DataTypes);
+  var route_tbl = _route_tbl(sequelize, DataTypes);
 
 
   return {
@@ -31,6 +33,7 @@ function initModels(sequelize) {
     employee_info,
     payroll_info,
     position_tbl,
+    route_tbl,
   };
 }
 module.exports = initModels;
