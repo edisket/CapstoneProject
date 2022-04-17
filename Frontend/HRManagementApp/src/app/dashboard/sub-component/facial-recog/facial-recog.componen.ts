@@ -244,7 +244,7 @@ export class FacialRecogComponent implements OnInit {
             const descriptions:any[]=[];
 
 
-            for(let i = 1; i <= 3; i++){
+            for(let i = 1; i <= 1; i++){
                 const img = await faceapi.fetchImage(`/assets/SamplePics/${x}/${i}.png`);
 
                 const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()

@@ -1,19 +1,22 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('position_tbl', {
+  return sequelize.define('employee_img', {
     id: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    position_name: {
-      type: DataTypes.STRING(45),
-      allowNull: true
+    emp_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    img: {
+      type: DataTypes.BLOB,
+      allowNull: false
     }
   }, {
     sequelize,
-    tableName: 'position_tbl',
+    tableName: 'employee_img',
     timestamps: false,
     indexes: [
       {

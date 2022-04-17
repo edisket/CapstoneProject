@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ApiUtil } from "src/app/util/apiUtil";
 
 @Injectable({
     providedIn:'root'
@@ -7,12 +8,18 @@ import { Injectable } from "@angular/core";
 export class TransactionService{
 
 
-    apiUri = "localhost:3000"
+    apiUri = "http://localhost:3000/"
     constructor(private http:HttpClient){}
 
 
 
-    CreateEmployee(reqBody:any){
-        return this.http.post<any>(this.apiUri,reqBody );
+
+    InsertEmployee(req:any){
+        return this.http.post<any>(this.apiUri + ApiUtil.INSERT_EMP, req);
     }
+
+    GetAllPosition(){
+        return this.http.get<any>(this.apiUri + ApiUtil.GET_ALL_POSITION);
+    }
+
 }

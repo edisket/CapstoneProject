@@ -5,6 +5,7 @@ var _attendance_tbl = require("./attendance_tbl");
 var _cert_tbl = require("./cert_tbl");
 var _emp_payroll_tbl = require("./emp_payroll_tbl");
 var _emp_pos_tbl = require("./emp_pos_tbl");
+var _employee_img = require("./employee_img");
 var _employee_info = require("./employee_info");
 var _payroll_info = require("./payroll_info");
 var _position_tbl = require("./position_tbl");
@@ -17,6 +18,7 @@ function initModels(sequelize) {
   var cert_tbl = _cert_tbl(sequelize, DataTypes);
   var emp_payroll_tbl = _emp_payroll_tbl(sequelize, DataTypes);
   var emp_pos_tbl = _emp_pos_tbl(sequelize, DataTypes);
+  var employee_img = _employee_img(sequelize, DataTypes);
   var employee_info = _employee_info(sequelize, DataTypes);
   var payroll_info = _payroll_info(sequelize, DataTypes);
   var position_tbl = _position_tbl(sequelize, DataTypes);
@@ -30,6 +32,7 @@ function initModels(sequelize) {
     cert_tbl,
     emp_payroll_tbl,
     emp_pos_tbl,
+    employee_img,
     employee_info,
     payroll_info,
     position_tbl,

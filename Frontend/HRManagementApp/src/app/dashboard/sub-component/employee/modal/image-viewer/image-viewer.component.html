@@ -1,0 +1,7 @@
+<div #container class="d-flex flex-column justify-content-center align-items-center">
+    <div #videoContainer  class="video-container">
+        <video #video [width]="500" [height]="500" autoplay muted class="mb-0" ></video>
+    </div>
+    <button *ngIf="!isCapturing" class="btn btn-primary mt-0" (click)="this.CaptureImage()">Capture</button>
+</div>
+

@@ -8,6 +8,7 @@ const rf = require('../helper/ResponseFormatter');
 router.post('/post/register', async (req, res) => {
     try {
         const msg = await empService.RegisterEmployee(req.body);
+        res.status(200);
         res.send(msg);
     } catch (err) {
         res.status(500);
@@ -45,7 +46,7 @@ router.get('/get/all/employee', async (req, res) => {
         res.send(rf(500,err.message));
     }
 });
-router.get('/get/position', async(req,res)=>{
+router.get('/get/all/position', async(req,res)=>{
     try{
     const data = await empService.GetAllPosition();
     res.send(data);

@@ -1,0 +1,1 @@
+sequelize-auto -h localhost -p 3306 -u newuser -x Password@1 -d thesis_schema -e  -o ./src/models

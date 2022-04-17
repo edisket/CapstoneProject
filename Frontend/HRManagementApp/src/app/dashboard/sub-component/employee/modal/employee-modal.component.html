@@ -1,11 +1,67 @@
-<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<!-- <h1 mat-dialog-title>{{dialogTitle}}</h1>
 
 <div mat-dialog-content>
-    <p>Sample Dialog</p>
+
+
+    <form [formGroup]="formConfig.formGroup" (ngSubmit)="OnSubmit()">
+        <formly-form [form]="formConfig.formGroup" [fields]="formConfig.formFields" 
+        [model]="formConfig.model">
+        </formly-form>
+    </form>
 </div>
 
 <div mat-dialog-actions>
     <button class="btn btn-primary">Submit</button>
     <button class="btn btn-danger" (click)="this.onClose()" >Cancel</button>
 
+</div> -->
+
+
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+
+<div mat-dialog-content>
+    <mat-stepper orientation="horizontal">
+        <mat-step label="Basic Info" [stepControl]="formConfig.formGroup">
+
+            <ng-template matStepLabel>Basic Info</ng-template>
+            <ng-template matStepContent>
+                <form [formGroup]="formConfig.formGroup" (ngSubmit)="OnSubmit()">
+                    <formly-form [form]="formConfig.formGroup"  [fields]="formConfig.formFields" [options]="formConfig.formOptions" [model]="formConfig.model">
+                    </formly-form>
+                </form><button class="btn btn-primary" (click)="OnSubmit()" matStepperNext>Submit</button>
+            </ng-template>
+
+
+            
+        </mat-step>
+        <mat-step label="Capture Image">
+
+            <ng-template matStepLabel> Capture Image</ng-template>
+
+            <ng-template matStepContent>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <image-viewer-component>
+                    </image-viewer-component>
+                </div>
+            </ng-template>
+            
+        </mat-step>
+
+        <mat-step label="Review Information">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h3>First Name: {{empRegServ.model.firstName}} </h3>
+                        <h3>Last Name: {{empRegServ.model.lastName}}</h3>
+                        <h3>Position: {{empRegServ.model.position}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <button (click)="OnRegister()">Submit</button>
+                </div>
+            </div>
+
+
+        </mat-step>
+    </mat-stepper>
 </div>
