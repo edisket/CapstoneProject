@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const router = require('./src/services/RouterService');
 const cors = require('cors');
-
+const bodyParser = require('body-parser')
 
 var corsOptions = {
     origin: 'http://localhost:4200',
@@ -10,7 +10,7 @@ var corsOptions = {
 }
 
 // app.use(cors(corsOptions));
-
+app.use(bodyParser.json({limit:'1gb'}));
 app.use(express.json());
 app.use('/', cors(corsOptions) , router);
 app.listen(3000, ()=>{

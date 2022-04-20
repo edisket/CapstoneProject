@@ -3,6 +3,11 @@ const { DataTypes, QueryTypes } = require('sequelize');
 const sequelize = require('../helper/orm')();
 const employeeinfo = require('../models/employee_info');
 const positiontbl = require('../models/position_tbl');
+
+
+
+
+
 class EmployeeService{
 
 
@@ -15,11 +20,15 @@ class EmployeeService{
     
 
     async RegisterEmployee(req){    
-        sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos)', 
-        {replacements:{ first_name:req.first_name, last_name:req.last_name, pos: req.position_id}}).then(x=>{ 
-            console.log(x);
-            return "success";
-        });
+
+
+        try{
+            sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos)', 
+            {replacements:{ first_name:req.firstName, last_name:req.lastName, pos: req.position}}).then(x=>{ 
+                return "success";
+            });
+        }catch(err){throw err;}
+     
     }
 
     //WIP

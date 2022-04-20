@@ -25,7 +25,7 @@
 
             <ng-template matStepLabel>Basic Info</ng-template>
             <ng-template matStepContent>
-                <form [formGroup]="formConfig.formGroup" (ngSubmit)="OnSubmit()">
+                <form [formGroup]="formConfig.formGroup" (ngSubmit)="OnSubmit()" enctype="multipart/form-data">
                     <formly-form [form]="formConfig.formGroup"  [fields]="formConfig.formFields" [options]="formConfig.formOptions" [model]="formConfig.model">
                     </formly-form>
                 </form><button class="btn btn-primary" (click)="OnSubmit()" matStepperNext>Submit</button>

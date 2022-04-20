@@ -13,6 +13,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
 
 
 
+
+    intervalId:any = {};
     isCapturing:boolean = false;
 
     @ViewChild('video', { static: true })
@@ -41,7 +43,8 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
     async ngOnInit() {
 
 
-        await Promise.all([faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
+        await Promise.all([
+        await faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
         await faceapi.nets.faceLandmark68Net.loadFromUri('../../assets/models'),
         await faceapi.nets.faceRecognitionNet.loadFromUri('../../assets/models'),
         await faceapi.nets.ssdMobilenetv1.loadFromUri('../../assets/models'),]).then(() => this.startVideo());
@@ -78,9 +81,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
 
             faceapi.matchDimensions(detectCanvas, {height:500, width:500});
 
-            setInterval(async()=>{
+           this.intervalId =  setInterval(async()=>{
                 
-                const detection= await faceapi.detectSingleFace(this.videoInput, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
+                const detection= await faceapi.detectSingleFace(this.videoInput, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor()
 
                 if(detection){
                     const resizedDetection = faceapi.resizeResults(detection, {height:500, width:500});
@@ -88,10 +91,9 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
                     detectCanvas.getContext('2d')?.clearRect(0,0,detectCanvas.width, detectCanvas.height);
 
 
-                    faceapi.draw.drawDetections(detectCanvas, resizedDetection);
+                    await faceapi.draw.drawDetections(detectCanvas, resizedDetection);
                 }
-
-            },100)
+            },250)
         })
     }
 
@@ -121,7 +123,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
 
                 this.img = r;
 
-                this.empRegServ.model.image = this.img;
+                 this.empRegServ.model.image = this.img;
 
                 this.videoContainer.nativeElement.setAttribute('class','');
 
@@ -137,7 +139,18 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
 
 
     ngOnDestroy(): void {
+
+        clearInterval(this.intervalId);
         (<MediaStream>this.videoInput.srcObject).getTracks().forEach(stream=> stream.stop());
+
+        this.videoInput = undefined;
+         faceapi.nets.tinyFaceDetector.dispose();
+         faceapi.nets.faceLandmark68Net.dispose();
+         faceapi.nets.faceRecognitionNet.dispose()
+         faceapi.nets.ssdMobilenetv1.dispose();
+
+        
+
     }
  
 

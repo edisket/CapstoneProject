@@ -1,9 +1,9 @@
 {
     "dev":{
-        "host":"localhost",
+        "host":"3edc6cf.online-server.cloud",
         "port":"3306",
         "dialect":"mysql",
-        "username":"newuser",
+        "username":"dbadmin",
         "password" :"Password@1",
         "database":"thesis_schema"
     }

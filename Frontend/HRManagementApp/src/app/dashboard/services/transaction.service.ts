@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiUtil } from "src/app/util/apiUtil";
 
@@ -14,8 +14,22 @@ export class TransactionService{
 
 
 
+
+    
+
+
+
     InsertEmployee(req:any){
-        return this.http.post<any>(this.apiUri + ApiUtil.INSERT_EMP, req);
+
+
+
+        const httpHeader = new HttpHeaders();
+
+        httpHeader.set('content-type', 'multipart/form-data')
+
+        return this.http.post<any>(this.apiUri + ApiUtil.INSERT_EMP, req, {
+            headers:httpHeader
+        });
     }
 
     GetAllPosition(){

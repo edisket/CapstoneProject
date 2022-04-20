@@ -4,12 +4,15 @@ const empService = require('../services/EmployeeService')(sequelize, DataTypes);
 const express = require('express');
 const router = express.Router();
 const rf = require('../helper/ResponseFormatter');
+const multer = require('multer');
+const upload = multer({dest:__dirname});
 
-router.post('/post/register', async (req, res) => {
+router.post('/post/register', upload.single('image'), async (req, res) => {
     try {
-        const msg = await empService.RegisterEmployee(req.body);
-        res.status(200);
-        res.send(msg);
+        console.log(req.body);
+         const msg = await empService.RegisterEmployee(req.body);
+         res.status(200);
+        res.send(msg);      
     } catch (err) {
         res.status(500);
         res.send(rf(500, err.message));
