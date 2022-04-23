@@ -3,73 +3,75 @@ const { DataTypes, QueryTypes } = require('sequelize');
 const sequelize = require('../helper/orm')();
 const employeeinfo = require('../models/employee_info');
 const positiontbl = require('../models/position_tbl');
-class EmployeeService{
+class EmployeeService {
 
 
-    EmployeeInfo; 
+    EmployeeInfo;
     PositionTable;
-    constructor(s,d){
-        this.EmployeeInfo = employeeinfo(s,d)
-        this.PositionTable = positiontbl(s,d);
+    constructor(s, d) {
+        this.EmployeeInfo = employeeinfo(s, d)
+        this.PositionTable = positiontbl(s, d);
     }
-    
 
-    async RegisterEmployee(req){    
-        sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos)', 
-        {replacements:{ first_name:req.first_name, last_name:req.last_name, pos: req.position_id}}).then(x=>{ 
-            console.log(x);
-            return "success";
-        });
+    RegisterEmployee(req) {
+        return new Promise(async (res, rej) => {
+            sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos)',
+                { replacements: { first_name: req.first_name, last_name: req.last_name, pos: req.position_id } }).then(x => {
+                    res({ 'isSuccess': true });
+                }).catch(err => { rej({'isSuccess':false, 'errMsg':err}) });
+        })
     }
 
     //WIP
-    async UpdateEmployee(req){
-        try{
+    async UpdateEmployee(req) {
+        try {
 
-        }catch(err){throw err;}
+        } catch (err) { throw err; }
     }
 
-    async DeleteEmployee(employeeId){
+    DeleteEmployee(employeeId) {
+        return new Promise(async (res, rej) => {
 
-        try{
-            await sequelize.query('CALL DeleteEmployee(:id)', {replacements:{id:employeeId}}).then(x=>{
+            await sequelize.query('CALL DeleteEmployee(:id)', { replacements: { id: employeeId } }).then(x => {
                 console.log(x);
-                return "success";
+                res({ 'isSuccess': true })
+            }).catch(err => {
+                rej({
+                    'isSuccess': false, 'errorMsg': err
+                })
             });
-        }catch(err){
-            throw err;
-        }
-       
+        })
     }
 
-    async GetEmployee(employeeId){
-        try{
-            const data =await  sequelize.query('SELECT * FROM  thesis_schema.view_employee_list WHERE id = :empid;', {replacements:{empid:employeeId}, type: QueryTypes.SELECT} );
-            
-            return data;
-        }
-        catch(err){throw err}
+    GetEmployee(employeeId) {
+        return new Promise(async (res, rej) => {
+
+            await sequelize.query('SELECT * FROM  thesis_schema.view_employee_list WHERE id = :empid;', { replacements: { empid: employeeId }, type: QueryTypes.SELECT })
+                .then(r => res(r))
+                .catch(err => rej({ 'isSuccess': false, 'errMsg': err }));
+        });
     }
 
-    async GetAllEmployee(){
-        try{
-            const data = await  sequelize.query('SELECT * FROM  thesis_schema.view_employee_list;', {type:QueryTypes.SELECT})
-            return data;
-        }
-        catch(err){throw err}
-    }  
+    GetAllEmployee() {
+        return new Promise(async (res, rej) => {
 
-    async GetAllPosition(){
-        try{
-             const data = await this.PositionTable.findAll();
-             return data;
-        }catch(ex){
-            throw ex
-        }
+            sequelize.query('SELECT * FROM  thesis_schema.view_employee_list;', { type: QueryTypes.SELECT })
+                .then(r => res(r))
+                .catch(err => rej({ 'isSuccess': false, 'errMsg': err }));
+
+        })
     }
 
+     GetAllPosition() {
+        return new Promise(async (res, rej) => {
+
+            await this.PositionTable.findAll()
+                .then(r => res(r))
+                .catch(err => rej({ 'isSuccess': false, 'errMsg': err }))
+        })
+    }
 }
 
-module.exports = (s,d)=>{
-    return new EmployeeService(s,d);
+module.exports = (s, d) => {
+    return new EmployeeService(s, d);
 }
