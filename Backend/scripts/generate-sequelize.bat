@@ -1,0 +1,1 @@
+sequelize-auto -h 3edc6cf.online-server.cloud -u dbadmin -x Password@1 -p 3306  -d thesis_schema -o ../src/models -e mysql

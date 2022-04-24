@@ -38,6 +38,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
     img:any = {};
     
  
+    intervalHolder:any = {};
     async ngOnInit() {
 
 
@@ -78,7 +79,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
 
             faceapi.matchDimensions(detectCanvas, {height:500, width:500});
 
-            setInterval(async()=>{
+            this.intervalHolder =   setInterval(async()=>{
                 
                 const detection= await faceapi.detectSingleFace(this.videoInput, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
 
@@ -136,8 +137,19 @@ export class ImageViewerComponent implements OnInit, OnDestroy{
     }
 
 
-    ngOnDestroy(): void {
+    async ngOnDestroy(): Promise<void> {
+
+        clearInterval(this.intervalHolder);
+
+        
         (<MediaStream>this.videoInput.srcObject).getTracks().forEach(stream=> stream.stop());
+
+        this.videoInput = undefined;
+
+        await faceapi.nets.tinyFaceDetector.dispose();
+        await faceapi.nets.faceLandmark68Net.dispose();
+        await faceapi.nets.faceRecognitionNet.dispose();
+        await faceapi.nets.ssdMobilenetv1.dispose();
     }
  
 

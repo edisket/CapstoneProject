@@ -15,18 +15,27 @@ class EmployeeService {
 
     RegisterEmployee(req) {
         return new Promise(async (res, rej) => {
-            sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos)',
-                { replacements: { first_name: req.first_name, last_name: req.last_name, pos: req.position_id } }).then(x => {
+            await sequelize.query('CALL RegisterNewEmployee(:first_name, :last_name, :pos, :site)',
+                { replacements: { first_name: req.first_name, last_name: req.last_name, pos: req.position_id, site:req.site_id } }).then(x => {
                     res({ 'isSuccess': true });
                 }).catch(err => { rej({'isSuccess':false, 'errMsg':err}) });
         })
     }
+    
+    async UpdateEmployee(data) {
 
-    //WIP
-    async UpdateEmployee(req) {
-        try {
-
-        } catch (err) { throw err; }
+        return new Promise(async (res,rej)=>{
+            await sequelize.query('CALL UpdateEmployee(:empId, :firstName, :lastName, :positionId, :siteId)',
+            {replacements:{
+                empId: data['empId'],
+                firstName: data['firstName'],
+                lastName: data['lastName'],
+                positionId: data['positionId'],
+                siteId: data['siteId']
+            }})
+            .then(()=>res({'isSuccess':true}))
+            .catch(err=>rej({'isSuccess':false, 'errMsg':err}))
+        });
     }
 
     DeleteEmployee(employeeId) {
