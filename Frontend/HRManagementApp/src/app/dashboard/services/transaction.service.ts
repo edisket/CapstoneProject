@@ -11,23 +11,9 @@ export class TransactionService{
     apiUri = "http://localhost:3000/"
     constructor(private http:HttpClient){}
 
-
-    httpOption = {
-        headers: new HttpHeaders({
-            'Content-Type':'multipart/form-data'
-        })
-    }
-
-
     InsertEmployee(req:any){
 
-        var fd = new FormData();
-        fd.append('firstName', req.firstName);
-        fd.append('lastName', req.lastName);
-        fd.append('position', req.position);
-        fd.append('files',req.image);
-
-        return this.http.post<any>(this.apiUri + ApiUtil.INSERT_EMP, fd);
+        return this.http.post<any>(this.apiUri + ApiUtil.INSERT_EMP, req);
     }
 
     GetAllPosition(){
